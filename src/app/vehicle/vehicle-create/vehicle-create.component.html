@@ -1,47 +1,92 @@
 <div class="container mt-5 col-4">
-  <form #createForm="ngForm" id="createForm" (ngSubmit)="addvehicle()">
+  <form [formGroup]="createForm" id="createForm" (ngSubmit)="addvehicle()">
       <h2 class="text-center text-primary">Create Vehicle</h2>
       <hr>
+
       <div class="form-group">
-        <label for="vehicletypeid">Vehicle Type:</label>
-        <select class="form-control" name="vehicletypeid" [(ngModel)]="data.Vehicletypeid" (ngModelChange)="getVehicleMakes($event);"> 
-          <option [ngValue]="">Select Vehicle Type</option>
-          <option *ngFor="let vehicletype of vehicletypes" [ngValue]="vehicletype.id">{{ vehicletype.type }}</option>
+        <select class="form-control"
+        [ngClass]="{'is-invalid': createForm.get('vehicletypeid').errors && createForm.get('vehicletypeid').touched
+                    || createForm.get('vehicletypeid').hasError('invalid') && createForm.get('vehicletypeid').touched}" 
+        formControlName="vehicletypeid" 
+        (ngModelChange)="getVehicleMakes($event);"> 
+          <option>Select Vehicle Type</option>
+          <option *ngFor="let vehicletype of vehicletypes" [value]="vehicletype.id">{{ vehicletype.type }}</option>
         </select>
+        <div class="invalid-feedback" *ngIf="createForm.get('vehicletypeid').hasError('required') 
+         && createForm.get('vehicletypeid').touched || createForm.get('vehicletypeid').hasError('invalid') 
+         && createForm.get('vehicletypeid').touched">Doors is required</div>
       </div>
       <div class="form-group">
-          <label for="vehicletypeid">Vehicle Make:</label>
-          <select class="form-control" name="make" [(ngModel)]="data.Make" (ngModelChange)="getVehicleModels($event);"> 
-            <option [ngValue]="">Select Vehicle Make</option>
-            <option *ngFor="let make of vehiclemakes" [ngValue]="make.id">{{ make.make }}</option>
+          <select class="form-control"
+          [ngClass]="{'is-invalid': createForm.get('make').errors && createForm.get('make').touched
+                    || createForm.get('make').hasError('invalid') && createForm.get('make').touched}" 
+          formControlName="make" 
+          (ngModelChange)="getVehicleModels($event);"> 
+            <option>Select Vehicle Make</option>
+            <option *ngFor="let make of vehiclemakes" [value]="make.id">{{ make.make }}</option>
           </select>
       </div>
       <div class="form-group">
-          <label for="vehicletypeid">Vehicle Model:</label>
-        <select class="form-control" name="model" [(ngModel)]="data.Model" (ngModelChange)="getVehicleBodyTypes($event);"> 
-          <option [ngValue]="">Select Vehicle Model</option>
-          <option *ngFor="let model of vehiclemodels" [ngValue]="model.id">{{ model.model }}</option>
+        <select class="form-control"
+        [ngClass]="{'is-invalid': createForm.get('model').errors && createForm.get('model').touched
+                    || createForm.get('model').hasError('invalid') && createForm.get('model').touched}" 
+        formControlName="model" 
+        (ngModelChange)="getVehicleBodyTypes($event);"> 
+          <option>Select Vehicle Model</option>
+          <option *ngFor="let model of vehiclemodels" [value]="model.id">{{ model.model }}</option>
         </select>
       </div>
       <div class="form-group">
-        <input type="text" class="form-control" required name="engine" [(ngModel)]="data.Engine" placeholder="Engine">
+        <input type="text" 
+        [ngClass]="{'is-invalid': createForm.get('engine').errors && createForm.get('engine').touched}"
+        class="form-control" 
+        formControlName="engine" 
+        placeholder="Engine">
+        <div class="invalid-feedback" *ngIf="createForm.get('engine').hasError('required') 
+         && createForm.get('engine').touched">Engine is required</div>
+         <div class="invalid-feedback" *ngIf="createForm.get('engine').hasError('maxlength') 
+         && createForm.get('engine').touched">Engine cannot exceed 20 characters</div>
       </div>
       <div class="form-group">
-          <input type="text" class="form-control" required name="doors" (keypress)="numberOnly($event)" [(ngModel)]="data.Doors" placeholder="Doors">
+          <input type="text"
+          [ngClass]="{'is-invalid': createForm.get('doors').errors && createForm.get('doors').touched}" 
+          class="form-control" 
+          formControlName="doors" 
+          (keypress)="numberOnly($event)" 
+          placeholder="Doors">
+          <div class="invalid-feedback" *ngIf="createForm.get('doors').hasError('required') 
+         && createForm.get('doors').touched">Doors is required</div>
+         <div class="invalid-feedback" *ngIf=" createForm.get('doors').hasError('max') 
+         && createForm.get('doors').touched">Doors cannot exceed 10 value</div>
+         <div class="invalid-feedback" *ngIf="createForm.get('doors').hasError('min') 
+         && createForm.get('doors').touched">Doors cannot be lower than 2 value</div>
         </div>
       <div class="form-group">
-        <input type="text" class="form-control" required name="wheels" (keypress)="numberOnly($event)" [(ngModel)]="data.Wheels" placeholder="Wheels">
+        <input type="text"
+        [ngClass]="{'is-invalid': createForm.get('wheels').errors && createForm.get('wheels').touched}"  
+        class="form-control" 
+        formControlName="wheels" 
+        (keypress)="numberOnly($event)" 
+        placeholder="Wheels">
+        <div class="invalid-feedback" *ngIf="createForm.get('wheels').hasError('required') 
+         && createForm.get('wheels').touched">Wheels is required</div>
+         <div class="invalid-feedback" *ngIf="createForm.get('wheels').hasError('max') 
+         && createForm.get('wheels').touched">Wheels cannot exceed 18 value</div>
+         <div class="invalid-feedback" *ngIf="createForm.get('wheels').hasError('min') 
+         && createForm.get('wheels').touched">Wheels cannot be lower than 4 value</div>
       </div>
       <div class="form-group">
-          <label for="vehicletypeid">Vehicle Body Type:</label>
-        <select class="form-control" name="bodytype" [(ngModel)]="data.BodyType" >
-          <option [ngValue]="">Select Vehicle Body Type</option>
-          <option *ngFor="let bodytype of vehiclebodytypes" [ngValue]="bodytype.id">{{ bodytype.bodyType }}</option>
+        <select class="form-control"
+        [ngClass]="{'is-invalid': createForm.get('bodytype').errors && createForm.get('bodytype').touched
+                    || createForm.get('bodytype').hasError('invalid') && createForm.get('bodytype').touched}" 
+        formControlName="bodytype">
+          <option>Select Vehicle Body Type</option>
+          <option *ngFor="let bodytype of vehiclebodytypes" [value]="bodytype.id">{{ bodytype.bodyType }}</option>
         </select>
       </div>
     
       <div class="form-group text-center">
-        <button class="btn btn-success" type="submit">Save</button>
+        <button class="btn btn-success" [disabled]="!createForm.valid" type="submit">Save</button>
         <button class="btn btn-default" type="button" [routerLink]="['/home']">Cancel</button>
       </div>
       

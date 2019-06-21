@@ -9,7 +9,7 @@ import { MenuComponent } from './menu/menu.component';
 import { HomeComponent } from './home/home.component';
 import { VehicleCreateComponent } from './vehicle/vehicle-create/vehicle-create.component';
 import { appRoutes } from './routes';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AlertifyService } from './_services/alertify.service';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 
@@ -24,6 +24,7 @@ import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
       BrowserModule,
       HttpClientModule,
       FormsModule,
+      ReactiveFormsModule,
       BsDropdownModule.forRoot(),
       RouterModule.forRoot(appRoutes),
 
